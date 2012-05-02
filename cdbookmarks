@@ -11,8 +11,11 @@ class CDB(object):
     config_path = ''
 
     def __init__(self):
-        self.config = ConfigParser()
         self.config_path = os.path.join(os.getenv('HOME'), ".bookmarks.ini")
+        if not os.path.exists(self.config_path):
+            open(self.config_path, "w").close()
+
+        self.config = ConfigParser()
         self.config.readfp(open(self.config_path, 'r'))
 
     def add_bookmark(self, name, path, before, after):
