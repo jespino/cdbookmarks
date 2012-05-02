@@ -1,0 +1,117 @@
+#!/usr/bin/env python
+#coding:utf-8
+
+import os
+import sys
+from ConfigParser import ConfigParser
+import argparse
+
+class CDB(object):
+    config = ConfigParser()
+    config_path = ''
+
+    def __init__(self):
+        self.config = ConfigParser()
+        self.config_path = os.path.join(os.getenv('HOME'), ".bookmarks.ini")
+        self.config.readfp(open(self.config_path, 'r'))
+
+    def add_bookmark(self, name, path, before, after):
+        if name in self.config.sections():
+            print "Sorry,this bookmark name is already existed,please use another one"
+            exit(1)
+
+        self.config.add_section(name)
+        self.config.set(name, 'path', path)
+        self.config.set(name, 'before', before)
+        self.config.set(name, 'after', after)
+        self.config.write(open(self.config_path, 'w'))
+    
+    #list all the bookmarks stored in .bookmarks
+    def list_bookmark(self):
+        for section in self.config.sections():
+            print section
+    
+    #delete bookmark
+    def del_bookmark(self, name):
+        if not name in self.config.sections():
+            print "This bookmark not exists"
+            exit(1)
+        self.config.remove_section(name)
+        self.config.write(open(self.config_path, 'w'))
+    
+    #delete all bookmarks
+    def clear_bookmarks(self):
+    	print "Delete all your bookmarks?(y/n)"
+
+        while True:
+    	    select = raw_input()
+    	    if select in ("y","Y"):
+    	    	break;
+    	    elif select in ("n","N"):
+    	    	print "Canceled!"
+    	    	exit()
+    	    else:
+    	    	print "Please input y/n"
+
+        for section in self.config.sections():
+            self.config.remove_section(section)
+        self.config.write(open(self.config_path, 'w'))
+    
+    #get certain bookmark
+    def get_bookmark(self, name):
+        if not name in self.config.sections():
+            print "This bookmark not exists"
+            exit(1)
+        print self.config.get(name, 'before')
+        print self.config.get(name, 'path')
+        print self.config.get(name, 'after')
+        print "---"
+    
+#the main function
+def main():
+    cdb = CDB()
+
+    parser = argparse.ArgumentParser(description='Manage bookmarks')
+
+    group_actions = parser.add_mutually_exclusive_group(required=True)
+    group_actions.add_argument('--list', help='list all bookmarks', action='store_true')
+    group_actions.add_argument('--clear', help='remove all bookmarks', action='store_true')
+    group_actions.add_argument('--go', help='print how to go to a bookmark', action='store_true')
+    group_actions.add_argument('--add', help='add a new bookmark', action='store_true')
+    group_actions.add_argument('--delete', help='delete a bookmark', action='store_true')
+
+    parser.add_argument('--path', '-p', help='bookmark path (default: current path)', default=os.getcwd())
+    parser.add_argument('--before', '-b', help='script to execute before change directory', default='')
+    parser.add_argument('--after', '-a', help='script to execute after change directory', default='')
+    parser.add_argument('name', help='name of the bookmark', nargs='?')
+
+    args = parser.parse_args(sys.argv[1:])
+
+    if args.add:
+        if not args.name:
+            parser.print_usage()
+            print "Add action need at least the name argument"
+            exit(1)
+    	cdb.add_bookmark(args.name, args.path, args.before, args.after)
+    elif args.delete:
+        if not args.name:
+            parser.print_usage()
+            print "Delete action need the name argument"
+            exit(1)
+    	cdb.del_bookmark(args.name)
+    elif args.list:
+    	cdb.list_bookmark()
+    elif args.clear:
+    	cdb.clear_bookmarks()
+    elif args.go:
+        if not args.name:
+            parser.print_usage()
+            print "Go action need the name argument"
+            exit(1)
+    	cdb.get_bookmark(args.name)
+    else:
+    	parser.print_usage()
+        exit(1)
+
+if __name__ == '__main__':
+    main()
