@@ -10,7 +10,7 @@ To install you can use the setup.py script::
 
   python setup.py install
 
-or the pip command:
+or the pip command::
 
   pip install cdbookmarks
 
