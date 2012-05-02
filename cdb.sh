@@ -6,13 +6,13 @@ cdb()
         while read -r line;do
             counter=$(($counter+1))
             if [ $counter -eq 1 ]; then
-                $line
+                eval $line
             fi
             if [ $counter -eq 2 ]; then
                 cd $line
             fi
             if [ $counter -eq 3 ]; then
-                $line
+                eval $line
             fi
         done < <(cdbookmarks --go $@)
 	else
