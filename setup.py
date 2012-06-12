@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "cdbookmarks",
-    version = "0.0.2",
+    version = "0.0.3",
     description = "Simple directory bookmark tool",
     author = "Jesús Espino",
     author_email = "jespinog@gmail.com",
