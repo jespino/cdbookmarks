@@ -9,7 +9,7 @@ setup(
     author = "Jesús Espino",
     author_email = "jespinog@gmail.com",
     url = "https://github.com/jespino/cdbookmarks",
-    scripts = ['cdbookmarks', 'cdb.sh'],
+    scripts = ['cdbookmarks', 'cdb.sh', 'cdb_completion.bash'],
     license = "BSD",
     classifiers = [
         'Programming Language :: Python :: 2.7',
