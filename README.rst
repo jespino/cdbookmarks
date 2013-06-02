@@ -1,6 +1,12 @@
 CDBookmarks
 -----------
 
+.. image:: https://pypip.in/v/cdbookmarks/badge.png
+    :target: https://crate.io/packages/cdbookmarks
+
+.. image:: https://pypip.in/d/cdbookmarks/badge.png
+    :target: https://crate.io/packages/cdbookmarks
+
 CDBoomkars is a simple app to easy bookmark directories on your filesystem.
 
 Install
