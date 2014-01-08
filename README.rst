@@ -31,3 +31,9 @@ To configure cdbookmarks you only have to add the cdb.sh to your shell config st
 Zsh completion works by default, but if you want completion on bash you have to add the line::
 
   source /usr/bin/cdb_completion.bash
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/jespino/cdbookmarks/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
