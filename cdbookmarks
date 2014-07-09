@@ -11,6 +11,7 @@ except ImportError:
     from ConfigParser import ConfigParser
 import argparse
 
+
 class CDB(object):
     config = ConfigParser()
     config_path = ''
@@ -34,28 +35,28 @@ class CDB(object):
         self.config.set(name, 'after', after)
         self.config.write(open(self.config_path, 'w'))
 
-    #list all the bookmarks stored in .bookmarks
+    # list all the bookmarks stored in .bookmarks
     def list_bookmark(self):
         for section in self.config.sections():
             print(section)
 
-    #delete bookmark
+    # delete bookmark
     def del_bookmark(self, name):
-        if not name in self.config.sections():
+        if name not in self.config.sections():
             print("This bookmark not exists")
             exit(1)
         self.config.remove_section(name)
         self.config.write(open(self.config_path, 'w'))
 
-    #delete all bookmarks
+    # delete all bookmarks
     def clear_bookmarks(self):
         print("Delete all your bookmarks?(y/n)")
 
         while True:
             select = input()
-            if select in ("y","Y"):
-                break;
-            elif select in ("n","N"):
+            if select in ("y", "Y"):
+                break
+            elif select in ("n", "N"):
                 print("Canceled!")
                 exit()
             else:
@@ -65,9 +66,9 @@ class CDB(object):
             self.config.remove_section(section)
         self.config.write(open(self.config_path, 'w'))
 
-    #get certain bookmark
+    # get certain bookmark
     def get_bookmark(self, name):
-        if not name in self.config.sections():
+        if name not in self.config.sections():
             print("This bookmark not exists")
             exit(1)
         print(self.config.get(name, 'before'))
@@ -75,7 +76,8 @@ class CDB(object):
         print(self.config.get(name, 'after'))
         print("---")
 
-#the main function
+
+# the main function
 def main():
     cdb = CDB()
 
