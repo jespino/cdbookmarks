@@ -9,7 +9,7 @@ cdb()
                 eval $line
             fi
             if [ $counter -eq 2 ]; then
-                cd $line
+                cd "$line"
             fi
             if [ $counter -eq 3 ]; then
                 eval $line
